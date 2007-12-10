@@ -44,7 +44,7 @@ Requires: x11-proto-devel >= 1.0.0
 Requires: libx11-devel >= 1.0.0
 Requires: libxprintutil-devel >= 1.0.1
 Provides: libxprintapputil-devel = %{version}-%{release}
-
+Obsoletes: %mklibname -d xprintapputil 1
 Conflicts: libxorg-x11-devel < 7.0
 
 %description -n %{develname}
@@ -69,7 +69,7 @@ Summary: Static development files for %{name}
 Group: Development/X11
 Requires: %{develname} = %{version}
 Provides: libxprintapputil-static-devel = %{version}-%{release}
-
+Obsoletes: %mklibname -d -s xprintapputil 1
 Conflicts: libxorg-x11-static-devel < 7.0
 
 %description -n %{staticname}
