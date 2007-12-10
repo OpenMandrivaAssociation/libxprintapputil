@@ -1,8 +1,10 @@
 %define libxprintapputil %mklibname xprintapputil 1
+%define develname %mklibname -d xprintapputil
+%define staticname %mklibname -d -s xprintapputil
 Name: libxprintapputil
 Summary:  The XprintAppUtil Library
 Version: 1.0.1
-Release: %mkrel 3
+Release: %mkrel 4
 Group: Development/X11
 License: MIT
 URL: http://xorg.freedesktop.org
@@ -33,7 +35,7 @@ The XprintAppUtil Library
 
 #-----------------------------------------------------------
 
-%package -n %{libxprintapputil}-devel
+%package -n %{develname}
 Summary: Development files for %{name}
 Group: Development/X11
 
@@ -45,15 +47,15 @@ Provides: libxprintapputil-devel = %{version}-%{release}
 
 Conflicts: libxorg-x11-devel < 7.0
 
-%description -n %{libxprintapputil}-devel
+%description -n %{develname}
 Development files for %{name}
 
-%pre -n %{libxprintapputil}-devel
+%pre -n %{develname}
 if [ -h %{_includedir}/X11 ]; then
 	rm -f %{_includedir}/X11
 fi
 
-%files -n %{libxprintapputil}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %{_libdir}/libXprintAppUtil.so
 %{_libdir}/libXprintAppUtil.la
@@ -62,18 +64,18 @@ fi
 
 #-----------------------------------------------------------
 
-%package -n %{libxprintapputil}-static-devel
+%package -n %{staticname}
 Summary: Static development files for %{name}
 Group: Development/X11
-Requires: %{libxprintapputil}-devel = %{version}
+Requires: %{develname} = %{version}
 Provides: libxprintapputil-static-devel = %{version}-%{release}
 
 Conflicts: libxorg-x11-static-devel < 7.0
 
-%description -n %{libxprintapputil}-static-devel
+%description -n %{staticname}
 Static development files for %{name}
 
-%files -n %{libxprintapputil}-static-devel
+%files -n %{staticname}
 %defattr(-,root,root)
 %{_libdir}/libXprintAppUtil.a
 
@@ -95,12 +97,10 @@ rm -rf %{buildroot}
 %clean
 rm -rf %{buildroot}
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post -n %{libxprintapputil} -p /sbin/ldconfig
+%postun -n %{libxprintapputil} -p /sbin/ldconfig
 
 %files -n %{libxprintapputil}
 %defattr(-,root,root)
 %{_libdir}/libXprintAppUtil.so.1
 %{_libdir}/libXprintAppUtil.so.1.0.0
-
-
