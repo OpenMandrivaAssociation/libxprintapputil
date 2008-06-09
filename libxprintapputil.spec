@@ -96,8 +96,12 @@ rm -rf %{buildroot}
 %clean
 rm -rf %{buildroot}
 
+%if %mdkversion < 200900
 %post -n %{libxprintapputil} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libxprintapputil} -p /sbin/ldconfig
+%endif
 
 %files -n %{libxprintapputil}
 %defattr(-,root,root)
