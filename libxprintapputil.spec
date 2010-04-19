@@ -4,7 +4,7 @@
 Name: libxprintapputil
 Summary:  The XprintAppUtil Library
 Version: 1.0.1
-Release: %mkrel 8
+Release: %mkrel 9
 Group: Development/X11
 License: MIT
 URL: http://xorg.freedesktop.org
@@ -18,7 +18,7 @@ BuildRequires: libxprintutil-devel >= 1.0.1
 BuildRequires: x11-proto-devel >= 1.0.0
 BuildRequires: x11-util-macros >= 1.0.1
 
-%description 
+%description
 The XprintAppUtil Library
 
 #-----------------------------------------------------------
