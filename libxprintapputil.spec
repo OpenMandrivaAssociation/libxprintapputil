@@ -4,12 +4,11 @@
 Name: libxprintapputil
 Summary:  The XprintAppUtil Library
 Version: 1.0.1
-Release: %mkrel 10
+Release: 11
 Group: Development/X11
 License: MIT
 URL: http://xorg.freedesktop.org
 Source0: http://xorg.freedesktop.org/releases/individual/lib/libXprintAppUtil-%{version}.tar.bz2
-BuildRoot: %{_tmppath}/%{name}-root
 
 BuildRequires: libx11-devel >= 1.0.0
 BuildRequires: libxau-devel >= 1.0.0
@@ -57,7 +56,6 @@ fi
 %files -n %{develname}
 %defattr(-,root,root)
 %{_libdir}/libXprintAppUtil.so
-%{_libdir}/libXprintAppUtil.la
 %{_libdir}/pkgconfig/xprintapputil.pc
 %{_includedir}/X11/XprintAppUtil/xpapputil.h
 
@@ -90,20 +88,70 @@ Static development files for %{name}
 %make
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std
-
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libxprintapputil} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libxprintapputil} -p /sbin/ldconfig
-%endif
 
 %files -n %{libxprintapputil}
 %defattr(-,root,root)
 %{_libdir}/libXprintAppUtil.so.1
 %{_libdir}/libXprintAppUtil.so.1.0.0
+
+
+%changelog
+* Sun Dec 05 2010 Oden Eriksson <oeriksson@mandriva.com> 1.0.1-10mdv2011.0
++ Revision: 609789
+- rebuild
+
+* Mon Apr 19 2010 Paulo Ricardo Zanoni <pzanoni@mandriva.com> 1.0.1-9mdv2010.1
++ Revision: 536815
+- rebuild
+
+* Mon Sep 14 2009 Thierry Vignaud <tv@mandriva.org> 1.0.1-8mdv2010.0
++ Revision: 439507
+- rebuild
+
+* Mon Jul 28 2008 Thierry Vignaud <tv@mandriva.org> 1.0.1-7mdv2009.0
++ Revision: 250750
+- rebuild
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+  + Paulo Andrade <pcpa@mandriva.com.br>
+    - Revert build requires.
+
+* Tue Jan 15 2008 Paulo Andrade <pcpa@mandriva.com.br> 1.0.1-5mdv2008.1
++ Revision: 153308
+- Update BuildRequires and rebuild
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Mon Dec 10 2007 Funda Wang <fwang@mandriva.org> 1.0.1-4mdv2008.1
++ Revision: 116865
+- Obsoletes old devel name
+- New devel package policy
+
+
+* Wed May 31 2006 Gustavo Pichorim Boiko <boiko@mandriva.com>
++ 2006-05-31 18:32:34 (31796)
+- rebuild to fix cooker uploading
+
+* Mon May 29 2006 Andreas Hasenack <andreas@mandriva.com>
++ 2006-05-29 14:36:37 (31646)
+- renamed mdv to packages because mdv is too generic and it's hosting only packages anyway
+
+* Thu May 04 2006 Gustavo Pichorim Boiko <boiko@mandriva.com>
++ 2006-05-04 21:25:17 (26918)
+- increment release
+
+* Thu May 04 2006 Gustavo Pichorim Boiko <boiko@mandriva.com>
++ 2006-05-04 19:54:51 (26912)
+- fixed more dependencies
+
+* Thu Apr 27 2006 Gustavo Pichorim Boiko <boiko@mandriva.com>
++ 2006-04-27 04:02:05 (26704)
+- Adding X.org 7.0 to the repository
+
