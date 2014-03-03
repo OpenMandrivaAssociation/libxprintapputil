@@ -30,7 +30,7 @@ Group:		Development/X11
 The XprintAppUtil Library.
 
 %files -n %{libname}
-%{_libdir}/libXprintAppUtil.so.%{major}
+%{_libdir}/libXprintAppUtil.so.%{major}*
 
 #----------------------------------------------------------------------------
 
