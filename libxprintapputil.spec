@@ -1,157 +1,66 @@
-%define libxprintapputil %mklibname xprintapputil 1
-%define develname %mklibname -d xprintapputil
-%define staticname %mklibname -d -s xprintapputil
-Name: libxprintapputil
-Summary:  The XprintAppUtil Library
-Version: 1.0.1
-Release: 12
-Group: Development/X11
-License: MIT
-URL: http://xorg.freedesktop.org
-Source0: http://xorg.freedesktop.org/releases/individual/lib/libXprintAppUtil-%{version}.tar.bz2
+%define major 1
+%define libname %mklibname xprintapputil %{major}
+%define devname %mklibname -d xprintapputil
 
-BuildRequires: pkgconfig(x11) >= 1.0.0
-BuildRequires: pkgconfig(xau) >= 1.0.0
-BuildRequires: libxp-devel >= 1.0.0
-BuildRequires: libxprintutil-devel >= 1.0.1
-BuildRequires: x11-proto-devel >= 1.0.0
-BuildRequires: x11-util-macros >= 1.0.1
+Summary:	The XprintAppUtil library
+Name:		libxprintapputil
+Version:	1.0.1
+Release:	13
+License:	MIT
+Group:		Development/X11
+Url:		http://xorg.freedesktop.org
+Source0:	http://xorg.freedesktop.org/releases/individual/lib/libXprintAppUtil-%{version}.tar.bz2
+BuildRequires:	x11-proto-devel
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xau)
+BuildRequires:	pkgconfig(xorg-macros)
+BuildRequires:	pkgconfig(xp)
+BuildRequires:	pkgconfig(xprintutil)
 
 %description
-The XprintAppUtil Library
+The XprintAppUtil library.
 
-#-----------------------------------------------------------
+#----------------------------------------------------------------------------
 
-%package -n %{libxprintapputil}
-Summary:  The XprintAppUtil Library
-Group: Development/X11
-Conflicts: libxorg-x11 < 7.0
-Provides: %{name} = %{version}
+%package -n %{libname}
+Summary:	The XprintAppUtil library
+Group:		Development/X11
 
-%description -n %{libxprintapputil}
-The XprintAppUtil Library
+%description -n %{libname}
+The XprintAppUtil Library.
 
-#-----------------------------------------------------------
+%files -n %{libxprintapputil}
+%{_libdir}/libXprintAppUtil.so.%{major}
 
-%package -n %{develname}
-Summary: Development files for %{name}
-Group: Development/X11
+#----------------------------------------------------------------------------
 
-Requires: %{libxprintapputil} = %{version}
-Requires: x11-proto-devel >= 1.0.0
-Requires: libx11-devel >= 1.0.0
-Requires: libxprintutil-devel >= 1.0.1
-Provides: libxprintapputil-devel = %{version}-%{release}
-Obsoletes: %mklibname -d xprintapputil 1
-Conflicts: libxorg-x11-devel < 7.0
+%package -n %{devname}
+Summary:	Development files for %{name}
+Group:		Development/X11
+Requires:	%{libname} = %{EVRD}
+Obsoletes:	%{_lib}xprintapputil-static-devel < 1.0.1-13
 
-%description -n %{develname}
-Development files for %{name}
+%description -n %{devname}
+Development files for %{name}.
 
-%pre -n %{develname}
-if [ -h %{_includedir}/X11 ]; then
-	rm -f %{_includedir}/X11
-fi
-
-%files -n %{develname}
-%defattr(-,root,root)
+%files -n %{devname}
 %{_libdir}/libXprintAppUtil.so
 %{_libdir}/pkgconfig/xprintapputil.pc
 %{_includedir}/X11/XprintAppUtil/xpapputil.h
 
-#-----------------------------------------------------------
-
-%package -n %{staticname}
-Summary: Static development files for %{name}
-Group: Development/X11
-Requires: %{develname} = %{version}
-Provides: libxprintapputil-static-devel = %{version}-%{release}
-Obsoletes: %mklibname -d -s xprintapputil 1
-Conflicts: libxorg-x11-static-devel < 7.0
-
-%description -n %{staticname}
-Static development files for %{name}
-
-%files -n %{staticname}
-%defattr(-,root,root)
-%{_libdir}/libXprintAppUtil.a
-
-#-----------------------------------------------------------
+#----------------------------------------------------------------------------
 
 %prep
 %setup -q -n libXprintAppUtil-%{version}
 
 %build
-%configure2_5x	--x-includes=%{_includedir}\
-		--x-libraries=%{_libdir}
+%configure2_5x\
+	--disable-static \
+	--x-includes=%{_includedir}\
+	--x-libraries=%{_libdir}
 
 %make
 
 %install
 %makeinstall_std
-
-%files -n %{libxprintapputil}
-%defattr(-,root,root)
-%{_libdir}/libXprintAppUtil.so.1
-%{_libdir}/libXprintAppUtil.so.1.0.0
-
-
-%changelog
-* Sun Dec 05 2010 Oden Eriksson <oeriksson@mandriva.com> 1.0.1-10mdv2011.0
-+ Revision: 609789
-- rebuild
-
-* Mon Apr 19 2010 Paulo Ricardo Zanoni <pzanoni@mandriva.com> 1.0.1-9mdv2010.1
-+ Revision: 536815
-- rebuild
-
-* Mon Sep 14 2009 Thierry Vignaud <tv@mandriva.org> 1.0.1-8mdv2010.0
-+ Revision: 439507
-- rebuild
-
-* Mon Jul 28 2008 Thierry Vignaud <tv@mandriva.org> 1.0.1-7mdv2009.0
-+ Revision: 250750
-- rebuild
-
-  + Pixel <pixel@mandriva.com>
-    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
-
-  + Paulo Andrade <pcpa@mandriva.com.br>
-    - Revert build requires.
-
-* Tue Jan 15 2008 Paulo Andrade <pcpa@mandriva.com.br> 1.0.1-5mdv2008.1
-+ Revision: 153308
-- Update BuildRequires and rebuild
-
-  + Olivier Blin <oblin@mandriva.com>
-    - restore BuildRoot
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - kill re-definition of %%buildroot on Pixel's request
-
-* Mon Dec 10 2007 Funda Wang <fwang@mandriva.org> 1.0.1-4mdv2008.1
-+ Revision: 116865
-- Obsoletes old devel name
-- New devel package policy
-
-
-* Wed May 31 2006 Gustavo Pichorim Boiko <boiko@mandriva.com>
-+ 2006-05-31 18:32:34 (31796)
-- rebuild to fix cooker uploading
-
-* Mon May 29 2006 Andreas Hasenack <andreas@mandriva.com>
-+ 2006-05-29 14:36:37 (31646)
-- renamed mdv to packages because mdv is too generic and it's hosting only packages anyway
-
-* Thu May 04 2006 Gustavo Pichorim Boiko <boiko@mandriva.com>
-+ 2006-05-04 21:25:17 (26918)
-- increment release
-
-* Thu May 04 2006 Gustavo Pichorim Boiko <boiko@mandriva.com>
-+ 2006-05-04 19:54:51 (26912)
-- fixed more dependencies
-
-* Thu Apr 27 2006 Gustavo Pichorim Boiko <boiko@mandriva.com>
-+ 2006-04-27 04:02:05 (26704)
-- Adding X.org 7.0 to the repository
 
