@@ -5,7 +5,7 @@
 Summary:	The XprintAppUtil library
 Name:		libxprintapputil
 Version:	1.0.1
-Release:	13
+Release:	14
 License:	MIT
 Group:		Development/X11
 Url:		http://xorg.freedesktop.org
